@@ -1,5 +1,5 @@
-import { connectToDB } from "@utils/database";
 import Prompt from "@models/prompt";
+import { connectToDB } from "@utils/database";
 
 export const GET = async (request, { params }) => {
     try {
@@ -49,7 +49,6 @@ export const DELETE = async (request, { params }) => {
 
         return new Response("Prompt deleted successfully", { status: 200 });
     } catch (error) {
-        console.error(error);
         return new Response("Error deleting prompt", { status: 500 });
     }
 };

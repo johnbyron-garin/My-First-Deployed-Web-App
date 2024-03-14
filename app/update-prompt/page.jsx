@@ -1,29 +1,66 @@
-import '@styles/globals.css';
-import Nav from '@components/Nav'
-import Provider from '@components/Provider'
+"use client";
 
-export const metadata = {
-    title: "PromptyDumpty",
-    description: 'Discover & Share AI Prompts'
-}
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const RootLayout = ({ children }) => {
-  return (
-    <html lang="en">
-        <body>
-            <Provider>
-                <div className="main">
-                    <div className="gradient" />
-                </div>
+import Form from "@components/Form";
 
-                <main className="app">
-                    <Nav />
-                    {children}
-                </main>
-            </Provider>
-        </body>
-    </html>
-  )
-}
+const UpdatePrompt = () => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const promptId = searchParams.get("id");
 
-export default RootLayout
+    const [post, setPost] = useState({ prompt: "", tag: "", });
+    const [submitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+    const getPromptDetails = async () => {
+        const response = await fetch(`/api/prompt/${promptId}`);
+        const data = await response.json();
+
+        setPost({
+        prompt: data.prompt,
+        tag: data.tag,
+        });
+    };
+
+    if (promptId) getPromptDetails();
+    }, [promptId]);
+
+    const updatePrompt = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    if (!promptId) return alert("Missing PromptId!");
+
+    try {
+        const response = await fetch(`/api/prompt/${promptId}`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                prompt: post.prompt,
+                tag: post.tag,
+            }),
+        });
+
+        if (response.ok) {
+            router.push("/");
+        }
+    } catch (error) {
+        console.log(error);
+    } finally {
+        setIsSubmitting(false);
+    }
+    };
+
+    return (
+    <Form
+        type='Edit'
+        post={post}
+        setPost={setPost}
+        submitting={submitting}
+        handleSubmit={updatePrompt}
+    />
+    );
+};
+
+export default UpdatePrompt;
