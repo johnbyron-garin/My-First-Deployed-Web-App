@@ -1,80 +1,29 @@
-"use client";
+import '@styles/globals.css';
+import Nav from '@components/Nav'
+import Provider from '@components/Provider'
 
-import { Suspense, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import Form from "@components/Form";
+export const metadata = {
+    title: "PromptyDumpty",
+    description: 'Discover & Share AI Prompts'
+}
 
-const UpdatePromptPage = () => {
- 
+const RootLayout = ({ children }) => {
   return (
-    <Suspense fallback={<><p>Loading...</p></>}>
-      <UpdatePrompt />
-    </Suspense>
-  );
-};
+    <html lang="en">
+        <body>
+            <Provider>
+                <div className="main">
+                    <div className="gradient" />
+                </div>
 
-export default UpdatePromptPage;
+                <main className="app">
+                    <Nav />
+                    {children}
+                </main>
+            </Provider>
+        </body>
+    </html>
+  )
+}
 
-
-const UpdatePrompt = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const promptId = searchParams.get("id");
-  const [submitting, setSubmitting] = useState(false);
-  const [post, setPost] = useState({
-    prompt: "",
-    tag: "",
-  });
-
-  useEffect(() => {
-    const getPromptDetails = async () => {
-      const response = await fetch(`/api/prompt/${promptId}`);
-      const data = await response.json();
-      setPost({
-        prompt: data.prompt,
-        tag: data.tag,
-      });
-    };
-
-    if (promptId) {
-      getPromptDetails();
-    }
-  }, [promptId]);
-
-  const updatePrompt = async (event) => {
-    event.preventDefault();
-    setSubmitting(true);
-
-    if (!promptId) {
-      return alert("Prompt ID not found.");
-    }
-
-    try {
-      const response = await fetch(`/api/prompt/${promptId}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          prompt: post.prompt,
-          tag: post.tag,
-        }),
-      });
-
-      if (response.ok) {
-        router.push("/");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  return (
-    <Form
-      type="Edit"
-      post={post}
-      setPost={setPost}
-      submitting={submitting}
-      handleSubmit={updatePrompt}
-    />
-  );
-};
+export default RootLayout

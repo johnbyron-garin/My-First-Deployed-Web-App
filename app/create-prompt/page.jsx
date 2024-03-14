@@ -32,7 +32,7 @@ const CreatePrompt = () => {
         });
 
         if(response.ok) {
-          routeModule.push('/');
+          router.push('/');
         }
     } catch (error) {
       console.error(error);
@@ -51,5 +51,3 @@ const CreatePrompt = () => {
     />
   )
 }
-
-export default CreatePrompt
