@@ -10,7 +10,7 @@ const UpdatePrompt = () => {
     const searchParams = useSearchParams();
     const promptId = searchParams.get("id");
 
-    const [post, setPost] = useState({ prompt: "", tag: "", });
+    const [post, setPost] = useState(initialPost);
     const [submitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
@@ -64,3 +64,15 @@ const UpdatePrompt = () => {
 };
 
 export default UpdatePrompt;
+
+export async function getServerSideProps(context) {
+    const promptId = context.query.id;
+    const response = await fetch(`http://localhost:3000/api/prompt/${promptId}`);
+    const data = await response.json();
+  
+    return {
+      props: {
+        initialPost: data,
+      },
+    };
+  }
