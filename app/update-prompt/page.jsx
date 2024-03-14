@@ -6,73 +6,61 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
 
 const UpdatePrompt = () => {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const promptId = searchParams.get("id");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const promptId = searchParams.get("id");
 
-    const [post, setPost] = useState(initialPost);
-    const [submitting, setIsSubmitting] = useState(false);
+  const [post, setPost] = useState({ prompt: "", tag: "", });
+  const [submitting, setIsSubmitting] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
     const getPromptDetails = async () => {
-        const response = await fetch(`/api/prompt/${promptId}`);
-        const data = await response.json();
+      const response = await fetch(`/api/prompt/${promptId}`);
+      const data = await response.json();
 
-        setPost({
+      setPost({
         prompt: data.prompt,
         tag: data.tag,
-        });
+      });
     };
 
     if (promptId) getPromptDetails();
-    }, [promptId]);
+  }, [promptId]);
 
-    const updatePrompt = async (e) => {
+  const updatePrompt = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     if (!promptId) return alert("Missing PromptId!");
 
     try {
-        const response = await fetch(`/api/prompt/${promptId}`, {
-            method: "PATCH",
-            body: JSON.stringify({
-                prompt: post.prompt,
-                tag: post.tag,
-            }),
-        });
+      const response = await fetch(`/api/prompt/${promptId}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          prompt: post.prompt,
+          tag: post.tag,
+        }),
+      });
 
-        if (response.ok) {
-            router.push("/");
-        }
+      if (response.ok) {
+        router.push("/");
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     } finally {
-        setIsSubmitting(false);
+      setIsSubmitting(false);
     }
-    };
+  };
 
-    return (
+  return (
     <Form
-        type='Edit'
-        post={post}
-        setPost={setPost}
-        submitting={submitting}
-        handleSubmit={updatePrompt}
+      type='Edit'
+      post={post}
+      setPost={setPost}
+      submitting={submitting}
+      handleSubmit={updatePrompt}
     />
-    );
+  );
 };
 
 export default UpdatePrompt;
-
-export async function getServerSideProps(context) {
-    const promptId = context.query.id;
-    const response = await fetch(`http://localhost:3000/api/prompt/${promptId}`);
-    const data = await response.json();
-  
-    return {
-      props: {
-        initialPost: data,
-      },
-    };
-  }
