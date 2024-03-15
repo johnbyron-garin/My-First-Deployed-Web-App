@@ -18,7 +18,7 @@ const PromptCardList = ({ data, handleTagClick }) => {
   );
 };
 
-const Feed = ({ lastUpdated }) => {
+const Feed = () => {
   const [allPosts, setAllPosts] = useState([]);
 
   // Search states
@@ -35,7 +35,7 @@ const Feed = ({ lastUpdated }) => {
 
   useEffect(() => {
     fetchPosts();
-  }, [lastUpdated]);
+  }, []);
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
