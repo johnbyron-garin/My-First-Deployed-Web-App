@@ -22,6 +22,22 @@ Using this public link, you can access the functionalities of the deployed web a
 - Fully responsive design, ensuring compatibility across various devices.
 - Deployed on [Vercel](https://vercel.com/), offering a fast and reliable hosting experience.
 
+## Screenshots
+
+Here are some screenshots of the application to give you a preview of its features and design:
+
+1. **Main Page**  
+   ![Screenshot 1](public/assets/documentation/1.png)
+
+2. **Create Post Section**  
+   ![Screenshot 2](public/assets/documentation/2.png)
+
+3. **User Profile Section**  
+   ![Screenshot 3](public/assets/documentation/3.png)
+
+4. **Edit Post Section**  
+   ![Screenshot 4](public/assets/documentation/4.png)
+
 ## References
 
 - [Next.js Tutorial](https://www.youtube.com/watch?v=wm5gMKuwSYk&ab_channel=JavaScriptMastery)
