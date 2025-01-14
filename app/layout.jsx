@@ -3,8 +3,8 @@ import Nav from '@components/Nav'
 import Provider from '@components/Provider'
 
 export const metadata = {
-    title: "PromptyDumpty",
-    description: 'Discover & Share AI Prompts'
+    title: "DreamCatch",
+    description: 'Share Your Dreams'
 }
 
 const RootLayout = ({ children }) => {

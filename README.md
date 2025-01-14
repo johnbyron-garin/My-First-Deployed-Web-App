@@ -2,7 +2,6 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-
 ## Trying it in the deployed web app
 
 Using this public link, you can access the functionalities of the deployed web application:
@@ -12,5 +11,4 @@ Using this public link, you can access the functionalities of the deployed web a
 ## References
 
 - [Next JS Tutorial](https://www.youtube.com/watch?v=wm5gMKuwSYk&ab_channel=JavaScriptMastery)
-- [Github repository inspiration from Adrian Hajdin](https://github.com/adrianhajdin/project_next_14_ai_prompt_sharing)
 - [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
